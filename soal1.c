@@ -6,10 +6,8 @@ typedef struct Node {
     int data;
     struct Node* next;
 } Node;
-
 Node* head = NULL;
 Node* tail = NULL;
-
 void PUSH_BACK(int x){
     Node* new_node = (Node*)malloc(sizeof(Node));
     new_node->data = x;
@@ -53,38 +51,51 @@ void DELETE(int x) {
 }
 void FIND(int x ){
     Node* current = head;
+    int position = 0;
     while (current != NULL) {
         if (current->data == x) {
-            printf("Data %d ditemukan\n", x);
+            printf("FOUND %d\n", position);
             return;
         }
         current = current->next;
+        position++;
     }
-    printf("Data %d tidak ditemukan\n", x);
+    printf("NOT FOUND\n");
 }
-void LIST_EMPTY() {
+void printList() {
     if (head == NULL) {
         printf("LIST EMPTY\n");
+        return;
     }
-}
-int main() {
-    int Q;
-    scanf("%d", &Q);
-    for (int i = 0; i < Q; i++) {
-        char op[10];
-        int x;
-        scanf("%s %d", op, &x);
-        if (strcmp(op, "PUSH_BACK") == 0) {
-            PUSH_BACK(x);
-        } else if (strcmp(op, "PUSH_FRONT") == 0) {
-            PUSH_FRONT(x);
-        } else if (strcmp(op, "DELETE") == 0) {
-            DELETE(x);
-        } else if (strcmp(op, "FIND") == 0) {
-            FIND(x);
-        }
+    Node* current = head;
+    printf("LIST ");
+    while (current != NULL) {
+        printf("%d ", current->data);
+        current = current->next;
     }
-    LIST_EMPTY();
-    return 0;
+    printf("\n");
 }
 
+int main(){
+    int Q, op, x;
+    scanf("%d", &Q);
+    for (int i = 0; i < Q; i++) {
+        scanf("%d %d", &op, &x);
+        switch (op) {
+            case 1:
+                PUSH_FRONT(x);
+                break;
+            case 2:
+                PUSH_BACK(x);
+                break;
+            case 3:
+                DELETE(x);
+                break;
+            case 4:
+                FIND(x);
+                break;
+        }
+    }
+    printList();
+    return 0;
+}
